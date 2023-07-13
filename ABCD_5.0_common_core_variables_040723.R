@@ -1,9 +1,9 @@
-###################################################################################################################################
+###################################################################################################################################  
 #
 #  make table of the core demographic variables (age, sex, race, parent educ, SEP, PA, puberty, site, screentime, sleep)
 #  ABCD Data release 5.0 June 2023 - caw
 #
-###################################################################################################################################
+###################################################################################################################################  
 
 setwd("C:/Users/cwyse/OneDrive - Maynooth University/General/Research/ABCD/June Data Package CAW")
 install.packages( 'https://raw.github.com/CDC-DNPAO/CDCAnthro/master/cdcanthro_0.1.1.tar.gz', type='source', repos=NULL )#package for BMIz score, install from github, CDC growth tables
