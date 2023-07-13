@@ -5,14 +5,14 @@
 #
 ###################################################################################################################################  
 
-setwd("C:/Users/cwyse/OneDrive - Maynooth University/General/Research/ABCD/June Data Package CAW")
+setwd("C:/Users/cwyse/OneDrive - Maynooth University/maynooth 2023/ABCD_Release_5_Core")
+
 install.packages( 'https://raw.github.com/CDC-DNPAO/CDCAnthro/master/cdcanthro_0.1.1.tar.gz', type='source', repos=NULL )#package for BMIz score, install from github, CDC growth tables
 library(cdcanthro)
 library(tidyverse)
 library(data.table)
 library(psych)
 library(skimr)
-
 
 # master table starts with ID only - saved as csv file on server ABCD folder
 ABCD_all_ID <- read.csv("C:/Users/cwyse/OneDrive - Maynooth University/General/Research/ABCD/June Data Package CAW/ABCD_all_ID.csv")
