@@ -6,5 +6,5 @@ https://wiki.abcdstudy.org/release-notes/start-page.html
 Data dictionary for the entire study is here:
 https://data-dict.abcdstudy.org/?
 
-## Generate core variables from ABCD Release 5.0
+
 
