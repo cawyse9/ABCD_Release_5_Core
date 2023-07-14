@@ -7,7 +7,7 @@
 
 setwd("C:/Users/cwyse/OneDrive - Maynooth University/maynooth 2023/ABCD_Release_5_Core")
 
-install.packages( 'https://raw.github.com/CDC-DNPAO/CDCAnthro/master/cdcanthro_0.1.1.tar.gz', type='source', repos=NULL )#package for BMIz score, install from github, CDC growth tables
+#install.packages( 'https://raw.github.com/CDC-DNPAO/CDCAnthro/master/cdcanthro_0.1.1.tar.gz', type='source', repos=NULL )#package for BMIz score, install from github, CDC growth tables
 library(cdcanthro)
 library(tidyverse)
 library(data.table)
@@ -785,6 +785,9 @@ ABCDdata$screentime_total_p <-  ABCDdata$screentime_1_wkdy_hrs_p +
 #-----------------------    pubertal development    ----------------------
 #Pubertal Development Scale 
 
+#need to adjust this for eventname and same for all other variable that could vary over the course of the study
+
+
 #ABCD variables (see dictionary for scoring)
 # pds_p_ss_male_category
 #	pds_p_ss_female_category
@@ -826,6 +829,44 @@ ABCDdata$pds_total_py_female <- factor(pds_total_py_female,
 table(ABCDdata$pds_total_py_female)
 table(ABCDdata$pds_total_py_male)
 
+#----------------------- number in the household categorical ---------------------
+
+#make a categorical household size variable
+
+#set 0 in household to NA
+#join 2-3 
+#join 7+
+
+#level 1 = "2 - 3 people"
+#level 2 = "4 people"
+#level 3 = "5 people"
+#level 4 = "6 people"
+#level 5 = "7+ people"
+
+ABCDdata$household_size <- ABCDdata$demo_roster_v2 #copy numbers variable
+
+ABCDdata$household_size[ABCDdata$demo_roster_v2==0 | ABCDdata$demo_roster_v2==1] <- NA #set to NA as above
+ABCDdata$household_size[ABCDdata$demo_roster_v2==0 | ABCDdata$demo_roster_v2==1] <- NA #set to NA as above
+
+ABCDdata$household_size[ABCDdata$demo_roster_v2==2 | ABCDdata$demo_roster_v2==3] <- 1 #set to 1 as above
+ABCDdata$household_size[ABCDdata$demo_roster_v2==4 ] <- 2 #set to 1 as above
+ABCDdata$household_size[ABCDdata$demo_roster_v2==5 ] <- 3 #set to 1 as above
+ABCDdata$household_size[ABCDdata$demo_roster_v2==6 ] <- 4 #set to 1 as above
+ABCDdata$household_size[ABCDdata$demo_roster_v2 > 6 ] <- 5 #set to 1 as above
+
+ABCDdata$household_size <- factor(ABCDdata$household_size,
+                                       levels = c(1:5),
+                                       labels = c(
+                                         "2-3 people",
+                                         "4 people",
+                                         "5 people",
+                                         "6 people",
+                                         "7+ people")
+                                       )    
+
+#number in house hold       0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   18   19   60   77 
+#number of cases in ABCD    31   37  436 1488 3870 2902 1637  671  274  104   78   23   19    6    5    1    3    1    1    1    1 
+
 #-------------------------------------------------------------------------------------------------
 
 names (ABCDdata)
@@ -862,9 +903,54 @@ ABCD5_core <- as.data.frame(ABCDdata[,c('src_subject_id',
   'pds_total_py_male',
   'pds_total_py_female')])
 
-                                     
-   
+ABCD5_core$eventname<-as.factor(ABCD5_core$eventname)       
+
 write.csv(ABCD5_core, file="ABCD5_core_variables_060723.csv")
 
+ABCDdata$household.educ
 
 
+#-------------------------------------------------------------------------------------------------
+
+names (ABCDdata)
+
+#select variable for core dataset and save to csv
+
+ABCD5_core <- as.data.frame(ABCDdata[,c('src_subject_id',
+  'interview_date',
+  'eventname',
+  'site_id_l',
+  'age',
+  'sex',
+  'reshist_addr1_adi_wsum',
+  'reshist_addr1_adi_perc',
+  'household.income.3level',
+  'household.income.10level',
+  'race.6level.p',
+  'race.4level.p',
+  'race.6level.y',
+  'race.4level.y',
+  'race_ethnicity',
+  'household.educ',
+  'married',
+  'married.or.livingtogether',
+  'rel_family_id',
+  'rel_birth_id',
+  'demo_roster_v2',
+  'sleepdisturb1_p',
+  'sds_p_ss_total',
+  'anthro_bmi_calc',
+  'BMIz',
+  'physical_activity1_y',
+  'screentime_total_p',
+  'pds_total_py_male',
+  'pds_total_py_female')])
+
+ABCD5_core$eventname<-as.factor(ABCD5_core$eventname)       
+ABCD5_core$demo_roster_v2 <- as.factor(ABCD5_core$demo_roster_v2,
+                                       levels = 2:5)            
+table(ABCD5_core$demo_roster_v2)
+
+
+   
+write.csv(ABCD5_core, file="ABCD5_core_variables_060723.csv")
