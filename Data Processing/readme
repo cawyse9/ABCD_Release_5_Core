@@ -1,3 +1,3 @@
 # Generate core variables from ABCD Release 5.0
 
-Script for generation of pilot data for FFP 2023 is [here](ABCD_FFP_pilot.R)
+Script for generation of pilot data for FFP 2023 is [here](ABCD_data_FFP.R)
